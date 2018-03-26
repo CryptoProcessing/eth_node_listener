@@ -53,8 +53,10 @@ class ETHListener:
                 self.new_head_sub_id = sub_id
             if int(j['id']) == self.NEW_TXS_SUB_MSG['id']:
                 self.new_txs_sub_id = sub_id
+            return 'subscribed'
         else:
             result = self._process_sub_result(j)
+            return result
 
     def _on_error(self, ws, error):
         return
@@ -107,6 +109,7 @@ class ETHListener:
             'data': block_as_dict,
         }
         self._publish_to_amqp(body=json.dumps(mq_msg))
+        return mq_msg
 
     def _process_new_tx(self, new_tx):
         tx = self._web3.eth.getTransaction(new_tx)
@@ -115,3 +118,4 @@ class ETHListener:
             'data': dict(tx),
         }
         self._publish_to_amqp(body=json.dumps(mq_msg))
+        return mq_msg
