@@ -1,7 +1,6 @@
 import unittest, json
 
-from unittest.mock import patch
-from unittest.mock import Mock
+from unittest.mock import patch, Mock
 
 from eth_node_listener.tests.base import BaseTestCase
 
