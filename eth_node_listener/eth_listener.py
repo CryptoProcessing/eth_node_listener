@@ -59,7 +59,7 @@ class ETHListener:
                 result = self._process_sub_result(j)
                 return result
         except Exception as e:
-            print(e)
+            return None
 
     def _on_error(self, ws, error):
         return
