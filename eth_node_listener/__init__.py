@@ -25,7 +25,7 @@ def create_eth_listener(app):
             app,
             ws_addr=app.config.get('ETH_WS_ADDR', 'ws://localhost:8546'),
             rpc_addr=app.config.get('ETH_RPC_ADDR', 'http://127.0.0.1:8545'))
-    eth_listener.start(sub_new_head=True)
+    eth_listener.start(sub_new_head=True, sub_new_txs=True)
 
 app = Flask(__name__)
 app.config.from_pyfile(CONFIG_FILE_PATH)

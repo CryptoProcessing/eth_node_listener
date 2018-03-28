@@ -46,17 +46,20 @@ class ETHListener:
             exchange=exchange, routing_key=routing_key, body=body)
 
     def _on_message(self, ws, message):
-        j = json.loads(message)
-        if 'id' in j:
-            sub_id = j['result']
-            if int(j['id']) == self.NEW_HEAD_SUB_MSG['id']:
-                self.new_head_sub_id = sub_id
-            if int(j['id']) == self.NEW_TXS_SUB_MSG['id']:
-                self.new_txs_sub_id = sub_id
-            return 'subscribed'
-        else:
-            result = self._process_sub_result(j)
-            return result
+        try:
+            j = json.loads(message)
+            if 'id' in j:
+                sub_id = j['result']
+                if int(j['id']) == self.NEW_HEAD_SUB_MSG['id']:
+                    self.new_head_sub_id = sub_id
+                if int(j['id']) == self.NEW_TXS_SUB_MSG['id']:
+                    self.new_txs_sub_id = sub_id
+                return 'subscribed'
+            else:
+                result = self._process_sub_result(j)
+                return result
+        except Exception as e:
+            print(e)
 
     def _on_error(self, ws, error):
         return
