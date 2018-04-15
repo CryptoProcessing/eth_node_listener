@@ -3,6 +3,7 @@ import threading
 
 from web3 import Web3, HTTPProvider
 
+
 class ETHListener:
     NEW_HEAD_SUB_MSG = {
         'id': 1,
@@ -19,7 +20,7 @@ class ETHListener:
 
     _sub_new_head, _sub_new_txs = True, False
 
-    new_head_sub_id, new_txs_sub_id  = '', ''
+    new_head_sub_id, new_txs_sub_id = '', ''
 
     def __init__(
             self, app,
@@ -46,6 +47,7 @@ class ETHListener:
             exchange=exchange, routing_key=routing_key, body=body)
 
     def _on_message(self, ws, message):
+        print(message)
         try:
             j = json.loads(message)
             if 'id' in j:
@@ -112,6 +114,7 @@ class ETHListener:
             'data': block_as_dict,
         }
         self._publish_to_amqp(body=json.dumps(mq_msg))
+        print(json.dumps(mq_msg))
         return mq_msg
 
     def _process_new_tx(self, new_tx):
@@ -121,4 +124,5 @@ class ETHListener:
             'data': dict(tx),
         }
         self._publish_to_amqp(body=json.dumps(mq_msg))
+        print(json.dumps(mq_msg))
         return mq_msg
