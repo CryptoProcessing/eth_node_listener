@@ -5,6 +5,7 @@ import pika
 
 CONFIG_FILE_PATH = '../config.py'
 
+
 def create_eth_listener(app):
     mq_settings = app.config.get('ETH_MQ', None)
     if mq_settings:
@@ -26,6 +27,7 @@ def create_eth_listener(app):
             ws_addr=app.config.get('ETH_WS_ADDR', 'ws://localhost:8546'),
             rpc_addr=app.config.get('ETH_RPC_ADDR', 'http://127.0.0.1:8545'))
     eth_listener.start(sub_new_head=True, sub_new_txs=True)
+
 
 app = Flask(__name__)
 app.config.from_pyfile(CONFIG_FILE_PATH)
