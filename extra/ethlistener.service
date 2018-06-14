@@ -1,0 +1,18 @@
+[Unit]
+Description=ethereum listener daemon
+After=network.target
+
+[Service]
+PIDFile=/run/ethlistener/pid
+User=me_laman
+Group=me_laman
+RuntimeDirectory=ethlistener
+Restart=on-failure
+WorkingDirectory=/var/ethereum-listener
+ExecStart=/var/ethereum-listener/venv/bin/python3 manage.py runserver -p 8001
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
