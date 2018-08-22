@@ -47,7 +47,7 @@ class ETHListener:
             exchange=exchange, routing_key=routing_key, body=body)
 
     def _on_message(self, ws, message):
-        print(message)
+        # print(message)
         try:
             j = json.loads(message)
             if 'id' in j:
